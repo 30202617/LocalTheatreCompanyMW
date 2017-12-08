@@ -1,0 +1,34 @@
+﻿@model IEnumerable<AssessmentSoftware.Models.Article>
+
+@{
+    ViewBag.Title = "Articles";
+}
+
+<h1>Articles</h1>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+@foreach (var item in Model)
+{
+    <div class="col-md-12">
+        <h2>@Html.DisplayFor(modelItem => item.ArticleTitle)</h2>
+        <p>@Html.DisplayFor(modelItem => item.ArticleDescription)</p>
+        <div>
+            <span class="badge">Posted @Html.DisplayFor(modelItem => item.ArticleDate) by @Html.DisplayFor(modelItem => item.UserName)</span>
+            <span class="label label-default">
+                Comments: @Html.DisplayFor(modelItem => item.Comments.Count)
+            </span> 
+            <div class="pull-left">
+                <span class="label">
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ArticleID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.ArticleID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ArticleID })
+                </span>
+
+            </div>
+        </div>
+        <hr>
+    </div>
+}
