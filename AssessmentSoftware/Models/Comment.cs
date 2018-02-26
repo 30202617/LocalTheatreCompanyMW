@@ -6,6 +6,9 @@ using System.Web;
 
 namespace AssessmentSoftware.Models
 {
+    /// <summary>
+    /// Holds data used within a comment
+    /// </summary>
     public class Comment
     {
        

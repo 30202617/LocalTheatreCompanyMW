@@ -58,8 +58,10 @@
         </div>
     }
 </div>
-@Html.Partial("_createPartial", new AssessmentSoftware.Models.Comment { ArticleID = Model.ArticleID })
+@if ((User.Identity.IsAuthenticated) && (!User.IsInRole("Restricted")))
+{
+    @Html.Partial("_createPartial", new AssessmentSoftware.Models.Comment { ArticleID = Model.ArticleID })
+}
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ArticleID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

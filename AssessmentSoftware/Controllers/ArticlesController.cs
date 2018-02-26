@@ -10,14 +10,29 @@ using AssessmentSoftware.Models;
 
 namespace AssessmentSoftware.Controllers
 {
+    /// <summary>
+    /// Holds fuctions to create, edit and delete articles
+    /// </summary>
     public class ArticlesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Articles
-        public ActionResult Index()
+        public ActionResult Index(String search)
         {
-            var articles = db.Articles.Include(f => f.Comments).ToList();
+            var articles = new List<Article>();
+
+            if (search != null)
+            {
+                articles = db.Articles.Where(
+                f => f.ArticleDescription.Contains(search)
+                ).Include(f => f.Comments).ToList();
+            }
+            else
+            {
+                articles = db.Articles.Include(f => f.Comments).ToList();
+            }
+
             return View(articles);
         }
 
@@ -57,8 +72,6 @@ namespace AssessmentSoftware.Controllers
         }
 
         // POST: Articles/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ArticleID,ArticleTitle,ArticleDescription,ArticleDate,UserName")] Article article)
@@ -80,9 +93,9 @@ namespace AssessmentSoftware.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var article = db.Articles
-    .Where(b => b.ArticleID == id)
-    .Include("Comments")
-    .FirstOrDefault();
+            .Where(b => b.ArticleID == id)
+            .Include("Comments")
+            .FirstOrDefault();
             if (article == null)
             {
                 return HttpNotFound();
@@ -91,8 +104,6 @@ namespace AssessmentSoftware.Controllers
         }
 
         // POST: Articles/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ArticleID,ArticleTitle,ArticleDescription,ArticleDate,UserName")] Article article)

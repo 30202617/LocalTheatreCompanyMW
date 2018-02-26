@@ -10,6 +10,9 @@ namespace AssessmentSoftware.Migrations
 
     internal sealed class Configuration : DbMigrationsConfiguration<AssessmentSoftware.Models.ApplicationDbContext>
     {
+        /// <summary>
+        /// Method that sets up initial roles
+        /// </summary>
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
@@ -41,7 +44,6 @@ namespace AssessmentSoftware.Migrations
             var adminuser = new ApplicationUser();
             adminuser.UserName = "admin@localtheatrecompany.com";
             adminuser.Email = "admin@localtheatrecompany.com";
-
             userPWD = "A@Z200711";
 
             var chkUser = UserManager.Create(adminuser, userPWD);
@@ -53,7 +55,7 @@ namespace AssessmentSoftware.Migrations
             }
 
  
-            if (!roleManager.RoleExists("Role2"))
+            if (!roleManager.RoleExists("Restricted"))
             {
                 var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
                 role.Name = "Restricted";

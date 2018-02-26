@@ -6,6 +6,9 @@ using System.Web;
 
 namespace AssessmentSoftware.Models
 {
+    /// <summary>
+    /// Holds data used within an article
+    /// </summary>
     public class Article
     {
         

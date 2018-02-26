@@ -8,12 +8,15 @@ using System.ComponentModel;
 
 namespace AssessmentSoftware.Models
 {
-    // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        
         [Required]
         [DefaultValue(false)]
         public bool IsAdmin { get; set; }
+
         [Required]
         [DefaultValue(false)]
         public bool IsSuspended { get; set; }
@@ -22,7 +25,7 @@ namespace AssessmentSoftware.Models
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
-            // Add custom user claims here
+            
             return userIdentity;
         }
     }
@@ -42,5 +45,6 @@ namespace AssessmentSoftware.Models
         public DbSet<Article> Articles { get; set; }
         public DbSet<Comment> Comments { get; set; }
 
+        public System.Data.Entity.DbSet<AssessmentSoftware.ViewModel.UserViewModel> UserViewModels { get; set; }
     }
 }

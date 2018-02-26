@@ -5,9 +5,18 @@
 }
 
 <h1>Articles</h1>
-
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <div class="searchBox">
+        <div>
+            @Html.Partial("_Search")
+    </div>
+</div>
+</p>
+<p>
+    @if ((User.Identity.IsAuthenticated) && (User.IsInRole("Admin")))
+    {
+        @Html.ActionLink("Create New Article", "Create")
+    }
 </p>
 
 @foreach (var item in Model)
@@ -15,6 +24,8 @@
     <div class="col-md-12">
         <h2>@Html.DisplayFor(modelItem => item.ArticleTitle)</h2>
         <p>@Html.DisplayFor(modelItem => item.ArticleDescription)</p>
+        <h5>@Html.DisplayFor(modelItem => item.UserName)</h5>
+
         <div>
             <span class="badge">Posted @Html.DisplayFor(modelItem => item.ArticleDate) by @Html.DisplayFor(modelItem => item.UserName)</span>
             <span class="label label-default">
@@ -22,9 +33,15 @@
             </span> 
             <div class="pull-left">
                 <span class="label">
-                    @Html.ActionLink("Edit", "Edit", new { id = item.ArticleID }) |
+                    @if ((User.Identity.IsAuthenticated) && (User.IsInRole("Admin")))
+                    {
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ArticleID })
+                    }|
                     @Html.ActionLink("Details", "Details", new { id = item.ArticleID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.ArticleID })
+                    @if ((User.Identity.IsAuthenticated) && (User.IsInRole("Admin")))
+                    {
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ArticleID })
+                    }
                 </span>
 
             </div>
